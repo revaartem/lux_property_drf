@@ -69,7 +69,7 @@ class ContactInfoLeft(models.Model):
     open_hours = HTMLField(max_length=200)
     email = HTMLField(max_length=200)
     call = HTMLField(max_length=200)
-    phone_for_footer = models.IntegerField()
+    phone_for_footer = models.CharField(max_length=30)
 
     class Meta:
         """
