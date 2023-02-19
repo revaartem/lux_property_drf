@@ -1,0 +1,63 @@
+
+<!-- ======= Our agents ======= -->
+    <div class="section section-5 bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-6 mb-5">
+            <h2 class="font-weight-bold heading text-primary mb-4">
+              Our Agents
+            </h2>
+            <p class="text-black-50">
+              Our best agent's team!
+            </p>
+          </div>
+        </div>
+        <div class="row">
+            {% for realtor in realtors %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                <div class="h-100 person">
+                  <img
+                    src="{{ realtor.photo.url }}"
+                    alt="Image"
+                    class="img-fluid"
+                  />
+
+                  <div class="person-contents">
+                    <h2 class="mb-0"><a href="#">{{ realtor.name }}</a></h2>
+                    <span class="meta d-block mb-3">{{ realtor.position }}</span>
+                    <p>
+                      {{ realtor.short_about }}
+                    </p>
+
+                    <ul class="social list-unstyled list-inline dark-hover">
+                        {% if realtor.twitter_link %}
+                      <li class="list-inline-item">
+                        <a href="{{ realtor.twitter_link }}"><span class="icon-twitter"></span></a>
+                      </li>
+                        {% endif %}
+                        {% if realtor.facebook_link %}
+                      <li class="list-inline-item">
+                        <a href="{{ realtor.facebook_link }}"><span class="icon-facebook"></span></a>
+                      </li>
+                        {% endif %}
+                        {% if realtor.linkedin_link %}
+                      <li class="list-inline-item">
+                        <a href="{{ realtor.linkedin_link }}"><span class="icon-linkedin"></span></a>
+                      </li>
+                        {% endif %}
+                        {% if realtor.instagram_link %}
+                      <li class="list-inline-item">
+                        <a href="{{ realtor.instagram_link }}"><span class="icon-instagram"></span></a>
+                      </li>
+                        {% endif %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ======= End Our agents ======= -->

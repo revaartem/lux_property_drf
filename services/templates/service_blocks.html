@@ -1,0 +1,40 @@
+<!-- ======= Service Blocks ======= -->
+<div class="section bg-light">
+      <div class="container">
+        <div class="row">
+            {% for info in info_blocks %}
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="box-feature mb-4">
+                {% if info.little_logo == 1 %}
+                    <span class="flaticon-house mb-4 d-block"></span>
+                {% endif %}
+                {% if info.little_logo == 2 %}
+                    <span class="flaticon-house-2 mb-4 d-block-3"></span>
+                {% endif %}
+                {% if info.little_logo == 3 %}
+                    <span class="flaticon-building mb-4 d-block"></span>
+                {% endif %}
+                {% if info.little_logo == 4 %}
+                    <span class="flaticon-house-3 mb-4 d-block-1"></span>
+                {% endif %}
+                {% if info.little_logo == 5 %}
+                    <span class="flaticon-house-4 mb-4 d-block"></span>
+                {% endif %}
+                {% if info.little_logo == 6 %}
+                    <span class="flaticon-house-1 mb-4 d-block-1"></span>
+                {% endif %}
+
+              <h3 class="text-black mb-3 font-weight-bold">
+                {{ info.header }}
+              </h3>
+              <p class="text-black-50">
+                {{ info.small_description }}
+              </p>
+              <p><a href="{{ info.get_absolute_url }}" class="learn-more">Read more</a></p>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+<!-- ======= End Service Blocks ======= -->

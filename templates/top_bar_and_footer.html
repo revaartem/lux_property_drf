@@ -1,0 +1,228 @@
+{% load static %}
+{% load custom_tags %}
+
+<!-- /*
+* Template Name: Property
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+    {% block head %}
+    {% endblock %}
+
+  <body>
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icofont-close js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <nav class="site-nav">
+      <div class="container">
+        <div class="menu-bg-wrap">
+          <div class="site-navigation">
+            <a href="{% url 'main_page:main_page_view' %}" class="logo m-0 float-start">Lux Property</a>
+
+            <ul
+              class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
+            >
+                {% if session == '/' %}
+                    <li class="active"><a href="{% url 'main_page:main_page_view' %}">Home</a></li>
+                {% else %}
+                    <li><a href="{% url 'main_page:main_page_view' %}">Home</a></li>
+                {% endif %}
+
+                {% if session|startswith:'/property' %}
+                    <li class="active"><a href="{% url 'properties_menu_page:menu_page' %}">Our offers</a></li>
+                {% else %}
+                    <li><a href="{% url 'properties_menu_page:menu_page' %}">Our offers</a></li>
+                {% endif %}
+
+                {% if session|startswith:'/services' %}
+                    <li class="active"><a href="{% url 'services:services_view' %}">Services</a></li>
+                {% else %}
+                    <li><a href="{% url 'services:services_view' %}">Services</a></li>
+                {% endif %}
+
+                {% if session|startswith:'/about' %}
+                    <li class="active"><a href="{% url 'about_us:about_us_view' %}">About Us</a></li>
+                {% else %}
+                    <li><a href="{% url 'about_us:about_us_view' %}">About Us</a></li>
+                {% endif %}
+
+                {% if session|startswith:'/contact' %}
+                    <li class="active"><a href="{% url 'contact_us:contact_us_view' %}">Contact Us</a></li>
+                {% else %}
+                    <li><a href="{% url 'contact_us:contact_us_view' %}">Contact Us</a></li>
+                {% endif %}
+
+                {% if 'manager' in user.groups.all.0.name %}
+                    <li class="has-children">
+                        {% if applications %}
+                            <a href="{% url 'manager:manager_view' %}">Manager (!)</a>
+                            {% else %}
+                            <a href="{% url 'manager:manager_view' %}">Manager</a>
+                            {% endif %}
+
+                        <ul class="dropdown">
+                            <li><a href="{% url 'manager:new_applications' %}">Unprocessed applications ({{ applications|length }} new)</a></li>
+                            <li><a href="{% url 'manager:archived_applications' %}">Archived applications</a></li>
+                            <li><a href="{% url 'logout_view' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <a
+              href="#"
+              class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+              data-toggle="collapse"
+              data-target="#main-navbar"
+            >
+              <span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% block hero %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    <div class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Contact</h3>
+                {% for info in infos %}
+                    {% if forloop.last %}
+                      <address>{{ info.location|safe }}</address>
+                      <ul class="list-unstyled links">
+                        <li><a href="tel://{{ info.phone_for_footer }}">{{ info.call|safe }}</a></li>
+                        <li>
+                          <a href="mailto:{{ info.email }}">{{ info.email|safe }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Sources</h3>
+              <ul class="list-unstyled float-start links">
+                  {% for source in sources %}
+                <li><a href="{{ source.source_url }}">{{ source.source|safe }}</a></li>
+                  {% endfor %}
+
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Links</h3>
+              <ul class="list-unstyled links">
+                <li><a href="{% url 'properties_menu_page:menu_page' %}">Our Offers</a></li>
+                <li><a href="{% url 'about_us:about_us_view' %}">About us</a></li>
+                <li><a href="{% url 'contact_us:contact_us_view' %}">Contact us</a></li>
+                <li><a href="{% url 'login_view' %}">Login</a></li>
+              </ul>
+
+              <ul class="list-unstyled social">
+                  {% for media_links in media_links_blocks %}
+                      {% if media_links.instagram %}
+                        <li>
+                          <a href="{{ media_links.instagram }}"><span class="icon-instagram"></span></a>
+                        </li>
+                      {% endif %}
+                      {% if media_links.twitter %}
+                        <li>
+                          <a href="{{ media_links.twitter }}"><span class="icon-twitter"></span></a>
+                        </li>
+                      {% endif %}
+                      {% if media_links.facebook %}
+                        <li>
+                          <a href="{{ media_links.facebook }}"><span class="icon-facebook"></span></a>
+                        </li>
+                      {% endif %}
+                      {% if media_links.linkedin %}
+                        <li>
+                          <a href="{{ media_links.linkedin }}"><span class="icon-linkedin"></span></a>
+                        </li>
+                      {% endif %}
+                      {% if media_links.pinterest %}
+                        <li>
+                          <a href="{{ media_links.pinterest }}"><span class="icon-pinterest"></span></a>
+                        </li>
+                      {% endif %}
+                      {% if media_links.dribbble %}
+                        <li>
+                          <a href="{{ media_links.dribbble }}"><span class="icon-dribbble"></span></a>
+                        </li>
+                      {% endif %}
+                  {% endfor %}
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!--
+              **==========
+              NOTE:
+              Please don't remove this copyright link unless you buy the license here https://untree.co/license/
+              **==========
+            -->
+
+            <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; Designed with love by
+              <a href="https://untree.co">Untree.co</a>
+              <!-- License information: https://untree.co/license/ -->
+            </p>
+            <div>
+              Distributed by
+              <a href="https://themewagon.com/" target="_blank">themewagon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.site-footer -->
+
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <script src={% static "js/bootstrap.bundle.min.js" %} ></script>
+    <script src={% static "js/tiny-slider.js" %} ></script>
+    <script src={% static "js/aos.js" %} ></script>
+    <script src={% static "js/navbar.js" %} ></script>
+    <script src={% static "js/counter.js" %} ></script>
+    <script src={% static "js/custom.js" %} ></script>
+  </body>
+</html>

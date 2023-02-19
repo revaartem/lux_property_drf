@@ -1,0 +1,116 @@
+
+<!-- ======= Our Benefits ======= -->
+{% for benefit in benefits %}
+{% if forloop.last %}
+    <div class="section section-4 bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-5">
+            <h2 class="font-weight-bold heading text-primary mb-4">
+              {{ benefit.header }}
+            </h2>
+            <p class="text-black-50">
+              {{ benefit.heading_text }}
+            </p>
+          </div>
+        </div>
+        <div class="row justify-content-between mb-5">
+          <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
+            <div class="img-about dots">
+              <img src="{{ benefit.image.url }}" alt="Image" class="img-fluid" />
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-home2"></span>
+              </span>
+              <div class="feature-text">
+                  <h3 class="heading">{{ benefit.house_point_header }}</h3>
+                <p class="text-black-50">
+                  {{ benefit.house_point_heading_text }}
+                </p>
+                </p>
+              </div>
+            </div>
+
+            <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-person"></span>
+              </span>
+              <div class="feature-text">
+                <h3 class="heading">{{ benefit.agents_point_header }}</h3>
+                <p class="text-black-50">
+                  {{ benefit.agents_point_heading_text }}
+                </p>
+              </div>
+            </div>
+
+            <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-security"></span>
+              </span>
+              <div class="feature-text">
+                <h3 class="heading">{{ benefit.safety_point_header }}</h3>
+                <p class="text-black-50">
+                  {{ benefit.safety_point_heading_text }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row section-counter mt-5">
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ benefit.block_1_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ benefit.block_1_heading_text }}</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ benefit.block_2_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ benefit.block_2_heading_text }}</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ benefit.block_3_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ benefit.block_3_heading_text }}</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ benefit.block_4_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ benefit.block_4_heading_text }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endif %}
+{% endfor %}
+<!-- ======= Our Benefits ======= -->

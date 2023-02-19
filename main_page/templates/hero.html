@@ -1,0 +1,27 @@
+
+<!-- ======= Hero ======= -->
+    <div class="hero">
+      <div class="hero-slide">
+          {% for pic in hero_photos %}
+                <div
+                    class="img overlay"
+                    style="background-image: url({{ pic.photo.url }})"
+                ></div>
+          {% endfor %}
+      </div>
+
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center">
+            <h1 class="heading" data-aos="fade-up">
+                {% for text in hero_header %}
+                    {% if forloop.last %}
+                        {{ text.text | safe }}
+                    {% endif %}
+                {% endfor %}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ======= End Hero ======= -->

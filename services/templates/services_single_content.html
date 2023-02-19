@@ -1,0 +1,83 @@
+{% extends 'services_single.html' %}
+
+{% block content %}
+<!-- ======= Service Single page ======= -->
+<div
+      class="hero page-inner overlay"
+      style="background-image: url({{ info_block.font_image_for_service_page.url }})"
+    >
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center mt-5">
+            <h1 class="heading" data-aos="fade-up">Services</h1>
+
+            <nav
+              aria-label="breadcrumb"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <ol class="breadcrumb text-center justify-content-center">
+                <li class="breadcrumb-item"><a href="{% url 'main_page:main_page_view' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'services:services_view' %}">Services</a></li>
+                <li
+                  class="breadcrumb-item active text-white-50"
+                  aria-current="page"
+                >
+                  {{ info_block.header }}
+                </li>
+
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ======= End Service Single page ======= -->
+
+<div class="section">
+      <div class="container">
+        <div class="row text-left mb-5">
+          <div class="col-12">
+            <h2 class="font-weight-bold heading text-primary mb-4">{{ info_block.header }}</h2>
+          </div>
+          <div class="col-lg-6">
+            {{ info_block.heading_text_left|safe }}
+          </div>
+          <div class="col-lg-6">
+            {{ info_block.heading_text_right|safe }}
+          </div>
+            <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+            <img src="{{ info_block.photo_1.url }}" alt="Image" class="img-fluid" />
+          </div>
+          <div class="col-md-4 mt-lg-5" data-aos="fade-up" data-aos-delay="100">
+            <img src="{{ info_block.photo_2.url }}" alt="Image" class="img-fluid" />
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <img src="{{ info_block.photo_3.url }}" alt="Image" class="img-fluid" />
+          </div>
+        </div>
+          <div class="section">
+      <div class="row justify-content-center footer-cta" data-aos="fade-up">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="mb-4">Leave a request right now!</h2>
+          <p>
+            <a
+              href="{% url 'contact_us:contact_us_view' %}"
+              target="_self"
+              class="btn btn-primary text-white py-3 px-4"
+              >Apply</a
+            >
+          </p>
+        </div>
+        <!-- /.col-lg-7 -->
+      </div>
+      <!-- /.row -->
+    </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

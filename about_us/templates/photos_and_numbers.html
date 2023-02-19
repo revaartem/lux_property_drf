@@ -1,0 +1,69 @@
+{% for data in photos_and_numbers %}
+{% if forloop.last %}
+<div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+            <img src="{{ data.image_1.url }}" alt="Image" class="img-fluid" />
+          </div>
+          <div class="col-md-4 mt-lg-5" data-aos="fade-up" data-aos-delay="100">
+            <img src="{{ data.image_2.url }}" alt="Image" class="img-fluid" />
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <img src="{{ data.image_3.url }}" alt="Image" class="img-fluid" />
+          </div>
+        </div>
+        <div class="row section-counter mt-5">
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ data.block_1_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ data.block_1_heading_text }}</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ data.block_2_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ data.block_2_heading_text }}</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ data.block_3_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ data.block_3_heading_text }}</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary">{{ data.block_4_header_number }}</span></span
+              >
+              <span class="caption text-black-50">{{ data.block_4_heading_text }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endif %}
+{% endfor %}

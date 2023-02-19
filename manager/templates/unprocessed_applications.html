@@ -1,0 +1,44 @@
+{% extends 'applications_from_clients.html' %}
+
+{% block content %}
+
+    <div class="section section-4 bg-light">
+      <div class="container">
+
+        <div class="row justify-content-center text-center mb-5">
+              <div class="col-lg-5">
+                <h2 class="font-weight-bold heading text-primary mb-4">
+                  Unprocessed applications <p>({{ unprocessed|length }} new)</p>
+                </h2>
+                <p class="text-black-50">
+                  After processing applications go to archive.
+                </p>
+              </div>
+            </div>
+
+          {% for info in unprocessed %}
+              <div class="d-flex feature-h">
+              <span class="wrap-icon me-3">
+                <span class="icon-person"></span>
+              </span>
+              <div class="feature-text">
+                <p><h3 class="heading">Name - {{ info.name }}</h3></p>
+                <p><h3 class="heading">Email - {{ info.email }}</h3></p>
+                <p><h3 class="heading">Date of the request - {{ info.date_of_the_request }}</h3></p>
+                <p><h3 class="heading">Subject - {{ info.subject }}</h3></p>
+                <p class="text-black-50">
+                    <p>Message:</p>
+                  {{ info.message }}
+                </p>
+                  <div class="col-md-3">
+                        <a href="{% url 'manager:application_to_archive' pk=info.pk %}">
+                            <button type="button", class="btn btn-primary">Archive application</button>
+                        </a>
+                    </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

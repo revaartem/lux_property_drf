@@ -1,0 +1,24 @@
+{% extends 'manager_menu.html' %}
+
+{% block content %}
+
+    <div class="section section-4 bg-light">
+      <div class="container">
+
+        <div class="row justify-content-center text-center mb-5">
+              <div class="col-lg-8">
+                  <p><h2 class="font-weight-bold heading text-primary mb-4">
+                    <a href="{% url 'manager:new_applications' %}">Unprocessed applications <button type="button", class="btn btn-danger">{{ unprocessed|length }}*  </button></a>
+                </h2>
+                  </p>
+                <p><h2 class="font-weight-bold heading text-primary mb-4">
+                    <a href="{% url 'manager:archived_applications' %}">Archived applications <button type="button", class="btn btn-success">{{ processed|length }}  </button></a>
+                </h2>
+                  </p>
+
+              </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
