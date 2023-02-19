@@ -33,7 +33,7 @@ The sixth model represents the benefits of using the website. It has several att
 and heading text of the benefits section and the header and heading text for three different benefit sections
 related to houses, agents, and safety. It also has an ImageField for the benefit section image.
 
-This model represents customer comments and feedback in a web application. It includes several attributes,
+The seven model represents customer comments and feedback in a web application. It includes several attributes,
 such as a photo field for the customer's picture, a character field for the customer's name, a text field for
 the customer's comment, and a character field for the customer's position or job title. The is_visible boolean
 field determines whether the comment is visible on the site, with the default value being True. This model can
