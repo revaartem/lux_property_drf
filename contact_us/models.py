@@ -95,6 +95,13 @@ class ContactInfoLeft(models.Model):
 
 
 class Sources(models.Model):
+    """
+    Model to store the source links for your web application.
+
+    Fields:
+    - source: the name or title of the source (HTMLField, max length 200).
+    - source_url: the URL of the source (URLField).
+    """
 
     source = HTMLField(max_length=200)
     source_url = models.URLField()
@@ -123,6 +130,17 @@ class Sources(models.Model):
 
 
 class MediaLinks(models.Model):
+    """
+    Model for storing links to various social media profiles.
+
+    Fields:
+        - instagram: URLField to store the link to the Instagram profile.
+        - twitter: URLField to store the link to the Twitter profile.
+        - facebook: URLField to store the link to the Facebook profile.
+        - linkedin: URLField to store the link to the LinkedIn profile.
+        - pinterest: URLField to store the link to the Pinterest profile.
+        - dribbble: URLField to store the link to the Dribbble profile.
+    """
 
     instagram = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
