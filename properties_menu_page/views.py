@@ -1,30 +1,27 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from main_page.serializers import PropertySerializer, PropertyPhotoSerializer
 from main_page.models import Property, PropertyPhoto
+from main_page.views import context_func
 
+@api_view(['GET', ])
+def property_menu_data(request):
+    if request.method == 'GET':
+        property_all_items = Property.objects.filter(is_visible=True)
+        property_all_serializer = PropertySerializer(property_all_items, many=True)
 
-# Create your views here.
+        property_special_items = Property.objects.filter(is_visible=True, recommended_offer=True)
+        property_special_serializer = PropertySerializer(property_special_items, many=True)
 
+        property_photo_data = PropertyPhoto.objects.all()
+        property_photo_serializer = PropertyPhotoSerializer(property_photo_data, many=True)
 
-def property_menu_view(request):
-    """
-    View function that displays the property menu page with featured and regular offers.
+        result = {
+            'property_all': property_all_serializer.data,
+            'property_special': property_special_serializer.data,
+            'property_photos': property_photo_serializer.data,
+            'context': context_func(request),
 
-    Returns:
-    Renders the 'menu_page.html' template with the following context:
-    - 'featured_item': QuerySet of featured properties that are visible and have a recommended offer status.
-    - 'regular_item': QuerySet of regular properties that are visible.
-    - 'photos_item': QuerySet of all property photos.
-    """
+        }
 
-    featured_item = Property.objects.filter(is_visible=True, recommended_offer=True)
-    regular_item = Property.objects.filter(is_visible=True)
-    photos_item = PropertyPhoto.objects.all()
-
-    data = {
-        'featured_item': featured_item,
-        'regular_item': regular_item,
-        'photos_item': photos_item
-
-    }
-
-    return render(request, 'menu_page.html', context=data)
+        return Response(result)

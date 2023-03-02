@@ -18,19 +18,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from account.views import login_view, logout_view
-from main_page.views import main_page_view
+from account.views import LoginView, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_page.urls')),
     path('property/', include('property_single_page.urls')),
-    path('property/menu/', include('properties_menu_page.urls')),
+    path('menu/', include('properties_menu_page.urls')),
     path('about/', include('about_us.urls')),
     path('contact/', include('contact_us.urls')),
     path('services/', include('services.urls')),
     path('manager/', include('manager.urls')),
-    path('login/', login_view, name='login_view'),
+    path('login/', LoginView.as_view(), name='login_view'),
     path('logout/', logout_view, name='logout_view')
 
 ]

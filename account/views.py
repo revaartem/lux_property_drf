@@ -1,47 +1,41 @@
-from django.shortcuts import render, redirect
-from .forms import UserLogin
-from django.contrib.auth import login, authenticate, logout
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import authenticate, login, logout
+from .serializers import UserLoginSerializer
+from rest_framework.decorators import api_view
 
 
-# Create your views here.
-def login_view(request):
+class LoginView(APIView):
     """
-    View function of the login page. Processed POST and GET requests.
-
-    form - form from model UserLogin with GET request or None.\n
-    next_get - Next page parameters.\n
-    information_in_contact_us - Object model InformationInContactUs.\n
-    footer - footer - Footer object model.\n
-    user_manager - Checked if user have group 'manager' in his group list.\n
-    user_auth - Is user authenticated or not.\n
-
-    :param request: POST or GET request.
-    :return: Render of the HTML-page with context.
+    View function of the login page. Processed POST requests.
     """
-    form = UserLogin(request.POST or None)
-    next_get = request.GET.get('next')
-    if form.is_valid():
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        login(request, user)
+    serializer_class = UserLoginSerializer
 
-        next_post = request.POST.get('next')
-        return redirect(next_get or next_post or '/')
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data.get('username')
+            password = serializer.validated_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return Response({'success': True}, status=status.HTTP_200_OK)
+            else:
+                return Response({'success': False, 'error': 'Invalid credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    data = {
-        'form': form,
-    }
-
-    return render(request, 'login_form.html', context=data)
 
 
+
+@api_view(['GET'])
 def logout_view(request):
     """
     Logout view.
 
     :param request: GET request.
-    :return: Redirect to the main page.
+    :return: Response with status 200.
     """
     logout(request)
-    return redirect('main_page:main_page_view')
+    return Response(status=status.HTTP_200_OK)

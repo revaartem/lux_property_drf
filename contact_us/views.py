@@ -1,56 +1,39 @@
 import time
 
-from django.shortcuts import render, redirect
-
-from contact_us.forms import ContactForm
-from contact_us.models import ContactInfoLeft
-
-
-# Create your views here.
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from contact_us.models import ContactInfoLeft, ContactUs, Sources, MediaLinks
+from .serializers import ContactUsSerializer, ContactInfoLeftSerializer, SourcesSerializer, MediaLinksSerializer
+from main_page.views import context_func
 
 
-def confirmation(request):
-    """
-    Renders the confirmation page.
-
-    Args:
-        request (HttpRequest): The HTTP request.
-
-    Returns:
-        HttpResponse: The rendered confirmation page.
-    """
-
-    return render(request, 'confirmation_page.html')
-
-
+@api_view(['GET', 'POST'])
 def contact_us_view(request):
-    """
-    Renders the contact page with contact form and left information.
-
-    If a valid POST request is made, it saves the contact form and redirects
-    to the confirmation page.
-
-    Args:
-        request (HttpRequest): The HTTP request.
-
-    Returns:
-        HttpResponse: The rendered contact page.
-    """
 
     if request.method == 'POST':
-        contact_us = ContactForm(request.POST)
-        if contact_us.is_valid():
-            contact_us.save()
-            return redirect('contact_us:confirmation')
+        data_serializer = ContactUsSerializer(data=request.data)
+        if data_serializer.is_valid():
+            contact_form = data_serializer.save()
+            return Response({'status': 'success', 'id': contact_form.id})
+        return Response(data_serializer.errors, status=400)
 
-    contact_form = ContactForm()
-    left_information = ContactInfoLeft.objects.all()
+    if request.method == 'GET':
+        contact_info_left = ContactInfoLeft.objects.all()
+        contact_info_left_serializer = ContactInfoLeftSerializer(contact_info_left, many=True)
 
-    data = {
-        'contact_form': contact_form,
-        'left_information': left_information,
-    }
+        sources = Sources.objects.all()
+        sources_serializer = SourcesSerializer(sources, many=True)
 
-    return render(request, 'contact_page_structure.html', context=data)
+        media_links = MediaLinks.objects.all()
+        media_links_serializer = MediaLinksSerializer(media_links, many=True)
+
+        data = {
+            'contact_info_left': contact_info_left_serializer.data,
+            'sources': sources_serializer.data,
+            'media_links': media_links_serializer.data,
+            'context': context_func(request),
+        }
+
+        return Response(data)
 
 

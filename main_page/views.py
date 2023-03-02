@@ -1,42 +1,88 @@
-from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
-from django.template.defaulttags import register
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import HeroHeader, HeroBackgroundPhotos, Realtor, Property, PropertyPhoto, OurBenefits, CustomerSays
+from .serializers import HeroHeaderSerializer, HeroBackgroundPhotosSerializer, RealtorSerializer, PropertySerializer,\
+    PropertyPhotoSerializer, OurBenefitsSerializer, CustomerSaysSerializer
+
+from manager.models import BackgroundImagesForPages
+from manager.serializers import BackgroundImagesForPagesSerializer, SessionPathSerializer,\
+    UnprocessedApplicationsSerializer
+
+from contact_us.models import ContactUs, ContactInfoLeft, Sources, MediaLinks
+from contact_us.serializers import ContactInfoLeftSerializer, SourcesSerializer,\
+    MediaLinksSerializer
 
 
-from main_page.models import HeroHeader, HeroBackgroundPhotos, Property, PropertyPhoto, OurBenefits, CustomerSays,\
-    Realtor
+def context_func(request):
 
-# Create your views here.
+    bg_photos = BackgroundImagesForPages.objects.all()
+    bg_photos_serializer = BackgroundImagesForPagesSerializer(bg_photos, many=True)
 
+    session_path_serializer = SessionPathSerializer({'path': request.path})
 
-def main_page_view(request: HttpRequest) -> HttpResponse:
-    """
-    This view function renders the main page of the website.
+    contact_applications = len(ContactUs.objects.filter(is_processed=False))
+    contact_applications_serializer = UnprocessedApplicationsSerializer({'unprocessed': contact_applications})
 
-    It retrieves information about the hero header, hero background photos, featured property,
-    all property photos, our benefits, customer reviews, and our real estate agents, and passes
-    this data to the main_page.html template to be rendered.
+    infos = ContactInfoLeft.objects.all()
+    infos_serializer = ContactInfoLeftSerializer(infos, many=True)
 
-    :param request: The HTTP request object.
-    :return: The HTTP response object.
-    """
-    hero_header = HeroHeader.objects.all()
-    hero_photos = HeroBackgroundPhotos.objects.filter(is_visible=True)
-    house_item = Property.objects.filter(is_visible=True, recommended_offer=True).all()
-    photos_item = PropertyPhoto.objects.all()
-    benefits = OurBenefits.objects.all()
-    customers = CustomerSays.objects.filter(is_visible=True)
-    realtors = Realtor.objects.filter(visible_in_our_agents=True)
+    sources = Sources.objects.all()
+    sources_serializer = SourcesSerializer(sources, many=True)
+
+    media_links_blocks = MediaLinks.objects.all()
+    media_links_blocks_serializer = MediaLinksSerializer(media_links_blocks, many=True)
 
     data = {
-
-        'hero_header': hero_header,
-        'hero_photos': hero_photos,
-        'house_item': house_item,
-        'photos_item': photos_item,
-        'benefits': benefits,
-        'customers': customers,
-        'realtors': realtors
-
+        'bg_photos': bg_photos_serializer.data,
+        'path': session_path_serializer.data,
+        'contact_applications': contact_applications_serializer.data,
+        'infos': infos_serializer.data,
+        'sources': sources_serializer.data,
+        'media_links_blocks': media_links_blocks_serializer.data,
     }
-    return render(request, 'main_page.html', context=data)
+
+    return data
+
+
+@api_view(['GET', 'POST'])
+def all_data(request):
+    if request.method == 'GET':
+
+        hero_header = HeroHeader.objects.all()
+        hero_header_serializer = HeroHeaderSerializer(hero_header, many=True)
+
+        hero_background_photos_data = HeroBackgroundPhotos.objects.all()
+        hero_background_photos_serializer = HeroBackgroundPhotosSerializer(hero_background_photos_data, many=True)
+
+        realtor_data = Realtor.objects.all()
+        realtor_serializer = RealtorSerializer(realtor_data, many=True)
+
+        property_data = Property.objects.all()
+        property_serializer = PropertySerializer(property_data, many=True)
+
+        property_photo_data = PropertyPhoto.objects.all()
+        property_photo_serializer = PropertyPhotoSerializer(property_photo_data, many=True)
+
+        our_benefits_data = OurBenefits.objects.all()
+        our_benefits_serializer = OurBenefitsSerializer(our_benefits_data, many=True)
+
+        customer_says_data = CustomerSays.objects.all()
+        customer_says_serializer = CustomerSaysSerializer(customer_says_data, many=True)
+
+        result = {
+            'hero_header': hero_header_serializer.data,
+            'hero_background_photos': hero_background_photos_serializer.data,
+            'realtor': realtor_serializer.data,
+            'property': property_serializer.data,
+            'property_photo': property_photo_serializer.data,
+            'our_benefits': our_benefits_serializer.data,
+            'customer_says': customer_says_serializer.data,
+            'context': context_func(request),
+        }
+
+        return Response(result)
+
+    elif request.method == 'POST':
+        # Обработка POST-запроса здесь
+        pass
+

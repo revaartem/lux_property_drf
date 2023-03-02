@@ -1,32 +1,36 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .models import AboutUsTopInfo, FirstBenefitsBlock, SecondBenefitsBlock, PhotosAndNumbers, TeamMember
+from .serializers import AboutUsTopInfoSerializer, FirstBenefitsBlockSerializer, SecondBenefitsBlockSerializer,\
+    PhotosAndNumbersSerializer, TeamMemberSerializer
+from main_page.views import context_func
 
-# Create your views here.
 
-
+@api_view(['GET', ])
 def about_us_view(request):
-    """
-    View function to render the about us page.
+    if request.method == 'GET':
+        info_block = AboutUsTopInfo.objects.all()
+        info_block_serializer = AboutUsTopInfoSerializer(info_block, many=True)
 
-    Args:
-    request (HttpRequest): The HTTP request sent to the server.
+        first_benefits = FirstBenefitsBlock.objects.all()
+        first_benefits_serializer = FirstBenefitsBlockSerializer(first_benefits, many=True)
 
-    Returns:
-        HttpResponse: The HTTP response containing the rendered about us page.
-    """
+        second_benefits = SecondBenefitsBlock.objects.all()
+        second_benefits_serializer = SecondBenefitsBlockSerializer(second_benefits, many=True)
 
-    info_block = AboutUsTopInfo.objects.all()
-    first_benefits = FirstBenefitsBlock.objects.all()
-    second_benefits = SecondBenefitsBlock.objects.all()
-    photos_and_numbers = PhotosAndNumbers.objects.all()
-    team_members = TeamMember.objects.filter(visible_in_our_agents=True)
+        photos_and_numbers = PhotosAndNumbers.objects.all()
+        photos_and_numbers_serializer = PhotosAndNumbersSerializer(photos_and_numbers, many=True)
 
-    data = {
-        'info_block': info_block,
-        'first_benefits': first_benefits,
-        'second_benefits': second_benefits,
-        'photos_and_numbers': photos_and_numbers,
-        'team_members': team_members,
-    }
+        team_members = TeamMember.objects.filter(visible_in_our_agents=True)
+        team_members_serializer = TeamMemberSerializer(team_members, many=True)
 
-    return render(request, 'about_us_content_structure.html', context=data)
+        data = {
+            'info_block': info_block_serializer.data,
+            'first_benefits': first_benefits_serializer.data,
+            'second_benefits': second_benefits_serializer.data,
+            'photos_and_numbers': photos_and_numbers_serializer.data,
+            'team_members': team_members_serializer.data,
+            'context': context_func(request),
+        }
+
+        return Response(data)
