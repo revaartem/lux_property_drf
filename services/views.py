@@ -10,6 +10,13 @@ from main_page.views import context_func
 
 @api_view(['GET', ])
 def services_view(request):
+    """
+    API view to get all visible service information and customer reviews.
+
+    Returns:
+    JSON response containing service information and customer reviews.
+    """
+
     if request.method == 'GET':
         info_blocks = ServicesInfoOffer.objects.filter(is_visible=True)
         info_blocks_serializer = ServicesInfoOfferSerializer(info_blocks, many=True)
@@ -28,6 +35,17 @@ def services_view(request):
 
 @api_view(['GET', ])
 def services_direct_view(request, id, slug):
+    """
+    API view to get specific service information based on the provided id and slug.
+
+    Args:
+    id: The id of the service information.
+    slug: The slug of the service information.
+
+    Returns:
+    JSON response containing the service information.
+    """
+
     if request.method == 'GET':
         info_block = get_object_or_404(ServicesInfoOffer, id=id, slug=slug, is_visible=True)
         info_blocks_serializer = ServicesInfoOfferSerializer(info_block)

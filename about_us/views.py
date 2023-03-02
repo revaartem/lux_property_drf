@@ -8,6 +8,14 @@ from main_page.views import context_func
 
 @api_view(['GET', ])
 def about_us_view(request):
+    """
+    View function that handles GET requests for the 'about us' page.
+    Returns serialized data for the AboutUsTopInfo, FirstBenefitsBlock, SecondBenefitsBlock,
+    PhotosAndNumbers, and TeamMember models, as well as the result of the context_func function.
+
+    :param request: GET request object.
+    :return: Response object with serialized data and context.
+    """
     if request.method == 'GET':
         info_block = AboutUsTopInfo.objects.all()
         info_block_serializer = AboutUsTopInfoSerializer(info_block, many=True)

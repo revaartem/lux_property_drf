@@ -14,6 +14,13 @@ from contact_us.serializers import ContactInfoLeftSerializer, SourcesSerializer,
 
 
 def context_func(request):
+    """
+    Returns context data in a dictionary format, which includes background photos, session path, unprocessed
+    contact applications, contact information, sources and media links.
+
+    :param request: HTTP request object
+    :return: Dictionary containing context data
+    """
 
     bg_photos = BackgroundImagesForPages.objects.all()
     bg_photos_serializer = BackgroundImagesForPagesSerializer(bg_photos, many=True)
@@ -46,6 +53,13 @@ def context_func(request):
 
 @api_view(['GET', 'POST'])
 def all_data(request):
+    """
+    Returns all data in JSON format via GET request, or processes POST request.
+
+    :param request: HTTP request object
+    :return: JSON object containing all data or processed POST request data
+    """
+
     if request.method == 'GET':
 
         hero_header = HeroHeader.objects.all()

@@ -6,6 +6,14 @@ from main_page.views import context_func
 
 @api_view(['GET', ])
 def property_menu_data(request):
+    """
+    A view that returns serialized property menu data.
+
+    :param request: the request object
+    :type request: rest_framework.request.Request
+    :return: a Response object containing serialized property data
+    :rtype: rest_framework.response.Response
+    """
     if request.method == 'GET':
         property_all_items = Property.objects.filter(is_visible=True)
         property_all_serializer = PropertySerializer(property_all_items, many=True)

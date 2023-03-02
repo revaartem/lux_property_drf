@@ -9,6 +9,22 @@ from main_page.views import context_func
 
 @api_view(['GET', 'POST'])
 def contact_us_view(request):
+    """
+    API endpoint for handling contact form submissions.
+
+    GET request returns the serialized data for ContactInfoLeft, Sources, and MediaLinks models and context
+    for rendering the contact form.
+
+    POST request accepts form data in JSON format, validates it using the ContactUsSerializer, saves the
+    data to the ContactUs model, and returns a success message along with the id of the newly created
+    ContactUs instance.
+
+    :param request: HTTP request object
+    :type request: rest_framework.request.Request
+
+    :return: HTTP response object
+    :rtype: rest_framework.response.Response
+    """
 
     if request.method == 'POST':
         data_serializer = ContactUsSerializer(data=request.data)

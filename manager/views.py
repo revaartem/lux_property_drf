@@ -19,14 +19,12 @@ def is_manager(user):
 @api_view(['GET', ])
 def manager_view(request):
     """
-    View function that displays the manager menu content page, including a list of processed and unprocessed contact
-    us forms.
+    A view for managers to see all processed and unprocessed applications.
 
-    Access is only granted to users who belong to the 'manager' group.
-
-    :param request: The HTTP request.
-    :return: The HTTP response that represents the manager menu content page.
+    :param request: HTTP request.
+    :return: HTTP response with a JSON containing processed and unprocessed applications.
     """
+
     processed = ContactUs.objects.filter(is_processed=True)
     processed_serializer = ContactUsSerializer(processed, many=True)
 
@@ -46,12 +44,10 @@ def manager_view(request):
 @api_view(['GET', ])
 def archived_applications(request):
     """
-    View function that displays the archived applications page, including a list of processed contact us forms.
+    A view for managers to see all archived applications.
 
-    Access is only granted to users who belong to the 'manager' group.
-
-    :param request: The HTTP request.
-    :return: The HTTP response that represents the archived applications page.
+    :param request: HTTP request.
+    :return: HTTP response with a JSON containing archived applications.
     """
 
     processed = ContactUs.objects.filter(is_processed=True)
@@ -69,12 +65,10 @@ def archived_applications(request):
 @api_view(['GET', ])
 def new_applications(request):
     """
-    View function that displays the new applications page, including a list of unprocessed contact us forms.
+    A view for managers to see all new unprocessed applications.
 
-    Access is only granted to users who belong to the 'manager' group.
-
-    :param request: The HTTP request.
-    :return: The HTTP response that represents the new applications page.
+    :param request: HTTP request.
+    :return: HTTP response with a JSON containing new unprocessed applications.
     """
 
     unprocessed = ContactUs.objects.filter(is_processed=False)
