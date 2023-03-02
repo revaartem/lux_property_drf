@@ -32,7 +32,7 @@ DB_PORT = os.environ.get('DB_PORT') or '5432'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://lux-property-on-drf.herokuapp.com', ]
+ALLOWED_HOSTS = ['lux-property-on-drf.herokuapp.com', ]
 
 # Application definition
 
